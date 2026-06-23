@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<title>SYNK Scan Experience</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#000;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+/* FULL SCREEN */
+.wrapper{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+}
+
+/* VIDEO */
+#heroVideo{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    top:0;
+    left:0;
+}
+
+/* GRAFFITI INTRO SCREEN */
+.intro{
+    position:absolute;
+    inset:0;
+    background:#000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    z-index:50;
+    animation:fadeOut 1s ease forwards;
+    animation-delay:3s; /* how long intro shows */
+}
+
+.intro h1{
+    color:#fff;
+    font-size:2rem;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    animation:glow 1.2s infinite alternate;
+}
+
+/* simple graffiti glow effect */
+@keyframes glow{
+    from{
+        text-shadow:0 0 10px #ff0033, 0 0 20px #ff0033;
+        transform:scale(1);
+    }
+    to{
+        text-shadow:0 0 20px #00f0ff, 0 0 40px #00f0ff;
+        transform:scale(1.05);
+    }
+}
+
+@keyframes fadeOut{
+    to{
+        opacity:0;
+        visibility:hidden;
+    }
+}
+
+/* TAP SOUND */
+.sound-overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:1.1rem;
+    font-weight:bold;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    background:rgba(0,0,0,.2);
+    cursor:pointer;
+    z-index:30;
+    transition:opacity .4s ease;
+}
+
+.sound-overlay.hidden{
+    opacity:0;
+    pointer-events:none;
+}
+
+/* BRAND */
+.branding{
+    position:absolute;
+    bottom:40px;
+    left:50%;
+    transform:translateX(-50%);
+    color:#fff;
+    text-align:center;
+    z-index:10;
+}
+
+.branding h1{
+    font-size:1.4rem;
+    letter-spacing:3px;
+}
+
+.branding p{
+    font-size:.8rem;
+    opacity:.9;
+    text-transform:uppercase;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <!-- GRAFFITI INTRO -->
+    <div class="intro">
+        <h1>SYNK LOADING</h1>
+    </div>
+
+    <!-- VIDEO -->
+    <video id="heroVideo"
+           autoplay
+           muted
+           loop
+           playsinline
+           preload="auto">
+
+        <source src="synk.mp4" type="video/mp4">
+    </video>
+
+    <!-- TAP SOUND -->
+    <div class="sound-overlay" id="soundOverlay">
+        TAP FOR SOUND 🔊
+    </div>
+
+    <!-- BRANDING -->
+    <div class="branding">
+        <h1>THE MARATHON CONTINUES</h1>
+        <p>SCAN • WATCH • LISTEN</p>
+    </div>
+
+</div>
+
+<script>
+
+const video = document.getElementById("heroVideo");
+const overlay = document.getElementById("soundOverlay");
+
+// sound unlock
+overlay.addEventListener("click", () => {
+    video.muted = false;
+    video.play();
+    overlay.classList.add("hidden");
+});
+
+// ensure autoplay starts muted
+window.addEventListener("load", () => {
+    video.play().catch(()=>{});
+});
+
+</script>
+
+</body>
+</html>
